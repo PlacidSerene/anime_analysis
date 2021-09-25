@@ -3,13 +3,15 @@ import scrapy
 class AnimeSpider(scrapy.Spider):
     name = 'anime'
     # start_urls = ['https://myanimelist.net/anime/genre/1/Action']
-    
+    # base_url = 'https://myanimelist.net/anime/genre/1/Action?page='
+    # urls = [base_url+str(i) for i in range(1,3)]
+
+    # start_urls = urls
     def start_requests(self):
         base_url = 'https://myanimelist.net/anime/genre/1/Action?page='
-        urls = [base_url+str(i) for i in range(30)]
+        urls = [base_url+str(i) for i in range(1,30)]
         for url in urls:
-            yield scrapy.Request(url=url, callback=self.parse)
-    
+            yield scrapy.Request(url=url, callback=self.parse)   
     def parse(self, response):
         
         for animes in response.css('div.seasonal-anime.js-seasonal-anime'):
